@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #eef2f3;
+    }
+    .calculator {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    .display {
+      width: 100%;
+      height: 50px;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      text-align: right;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 60px);
+      gap: 10px;
+    }
+    .buttons button {
+      padding: 1rem;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 5px;
+      background-color: #f5f5f5;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .buttons button:hover {
+      background-color: #ddd;
+    }
+  </style>
+</head>
+<body>
+  <!-- Build a fully functional calculator to practice DOM manipulation, event handling, and basic arithmetic operations.Implement functions to handle input parsing, event listeners on equal button, error handling, keyboard input handling. -->
+  <div class="calculator">
+    <input type="text" id="display" class="display" disabled />
+    <div class="buttons">
+      <button onclick="press('7')">7</button>
+      <button onclick="press('8')">8</button>
+      <button onclick="press('9')">9</button>
+      <button onclick="press('/')">/</button>
+      
+      <button onclick="press('4')">4</button>
+      <button onclick="press('5')">5</button>
+      <button onclick="press('6')">6</button>
+      <button onclick="press('*')">*</button>
+      
+      <button onclick="press('1')">1</button>
+      <button onclick="press('2')">2</button>
+      <button onclick="press('3')">3</button>
+      <button onclick="press('-')">-</button>
+      
+      <button onclick="press('0')">0</button>
+      <button onclick="press('.')">.</button>
+      <button onclick="calculate()">=</button>
+      <button onclick="press('+')">+</button>
+      
+      <button onclick="clearDisplay()" style="grid-column: span 4; background-color: #ff4d4d; color: white;">C</button>
+    </div>
+  </div>
+
+  <script>
+    const display = document.getElementById('display');
+
+    function press(key) {
+      display.value += key;
+    }
+
+    function clearDisplay() {
+      display.value = '';
+    }
+
+    function calculate() {
+      try {
+        const result = eval(display.value);
+        display.value = result;
+      } catch (e) {
+        display.value = 'Error';
+        setTimeout(() => (display.value = ''), 1000);
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      const key = e.key;
+      if ((key >= '0' && key <= '9') || ['+', '-', '*', '/', '.'].includes(key)) {
+        press(key);
+      } else if (key === 'Enter') {
+        e.preventDefault();
+        calculate();
+      } else if (key === 'Backspace') {
+        display.value = display.value.slice(0, -1);
+      } else if (key === 'Escape') {
+        clearDisplay();
+      }
+    });
+  </script>
+</body>
+</html>
